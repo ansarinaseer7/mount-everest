@@ -1,0 +1,108 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+<body style='margin:30px'>
+	<div style="text-align:center">
+  <h1>An Example of Springboot Rest APIs and Angular 4
+  </h1>
+  <img width="700" height="200" src="/assets/images/everest.jpg">
+  </div><br>
+    <br>
+   <div class="row">
+    <div class="col-xs-9">
+    	 <!-- <button type="submit" class="btn btn-primary" (click)="clickClients()">Load Clients</button>  -->
+    	 <h2>Existing clients</h2>
+    </div>
+    <div class="col-xs-3">
+        	<!-- <form class="navbar-form navbar-left" (submit)="searchClient($event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Search Customer" class="form-control">
+                      <button type="submit" class="btn btn-default">
+					    <span class="glyphicon glyphicon-search"></span> Search
+					  </button>
+                </div>
+            </form> -->
+      </div>
+    </div>  
+    <div class="row" *ngIf="clients">
+    	<div class="col-12">
+	    	<div class="table-responsive">
+	    		<table class="table table-bordred table-striped">
+	    			<thead>
+	    				<tr>
+	    					<td style="font-weight: bold;">Name</td>
+	    					<td style="font-weight: bold;">Address</td>
+	    					<td style="font-weight: bold;">Date</td>
+	    				</tr>
+	    			</thead>	
+	    			<tbody>
+	    				<tr *ngFor="let client of pagedItems">
+	    					<td>{{client.name}}</td>
+	    					<td>{{client.address}}</td>
+	    					<td>{{client.date}}</td>
+	    					<td>
+	    						<button class="btn btn-primary btn-xs" (click)="showEditClientForm(client)"  data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button>
+	    						<button class="btn btn-danger btn-xs" (click)="removeClient(client)" data-title="Delete" data-toggle="modal" data-target="#delete"><span class="glyphicon glyphicon-trash"></span></button>
+	    					</td>
+	    				</tr>
+	    			</tbody>
+	    		</table>
+	    	</div>
+	    </div>	
+    </div>
+    <div><button class="btn btn-primary" (click)="showAddClientForm()">Registering New Client</button></div><br>
+    <div class="">
+      <!-- Horizonatal Form -->
+      <div class="row">
+        <div class="col-xs-6">
+          <form *ngIf="clientForm" [formGroup]="reactiveForm" class="form-horizontal">    
+            <div class="form-group">
+              <label for="nameField" class="col-xs-2">Customer Name</label>
+              <div class="col-xs-10">
+                <input type="text" class="form-control"  [(ngModel)]="newClient.name" formControlName="name" placeholder="Your Name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="addressField" class="col-xs-2">Adress</label>
+              <div class="col-xs-10">
+                <input type="text" class="form-control" [(ngModel)]="newClient.address" formControlName="address" placeholder="Your Address" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="dateField" class="col-xs-2">Date</label>
+              <div class="col-xs-10">
+                <input type="date" class="form-control"  [(ngModel)]="newClient.date" formControlName="date" placeholder="Select a date" />
+              </div>
+            </div>
+            <div class="col-xs-10 col-xs-offset-2">
+              <button type="submit" class="btn btn-primary" (click)="saveClient(newClient)">Submit</button> <button type="reset" class="btn btn-default" (click)="cancelEdits()">Cancel</button>
+            </div>  
+          </form>
+        </div>
+      </div>
+    </div>
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+         <li [ngClass]="{disabled:pager.currentPage === 1}">
+             <a (click)="setPage(1)">First</a>
+         </li>
+         <li [ngClass]="{disabled:pager.currentPage === 1}">
+             <a (click)="setPage(pager.currentPage - 1)">Previous</a>
+         </li>
+         <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+             <a (click)="setPage(page)">{{page}}</a>
+         </li>
+         <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+             <a (click)="setPage(pager.currentPage + 1)">Next</a>
+         </li>
+         <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+             <a (click)="setPage(pager.totalPages)">Last</a>
+         </li>
+     </ul>
+</body>
+</html>
